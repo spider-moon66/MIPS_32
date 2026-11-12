@@ -1,14 +1,26 @@
 <div class="encabezados">Documentación recomendada:</div>
+<br>
 <a href="https://deepwiki.com/benjamalegni/mips-3-stages">MIPS 3 stages</a>
 <br>
-
+<br>
 Directorios:
-//modules:
+<br>
+<div><ul>
+
+<li>modules:</li>
+
 módulos e instancias
-//mem:
+
+<li>mem:</li>
+
 archivos para inicializar las memorias
-//interpreter:
+
+<li>interpreter:</li>
+
 traductor de instrucciones
-//testbenches:
+
+<li>testbenches:</li>
+
 Testbenches para datapaths
+</ul></div>
 
