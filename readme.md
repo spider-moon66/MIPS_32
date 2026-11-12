@@ -1,6 +1,6 @@
 <div class="encabezados">Documentación recomendada:</div>
 <br>
-<a href="https://deepwiki.com/benjamalegni/mips-3-stages">MIPS 3 stages</a>
+<a target="_blank" href="https://deepwiki.com/benjamalegni/mips-3-stages">MIPS 3 stages</a>
 <br>
 <br>
 Directorios:
