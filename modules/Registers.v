@@ -1,5 +1,6 @@
 module Registers( //Registros de proposito general
     input clk,
+    input reset,
     input [4:0] AR1,
     input [4:0] AR2,
     input [4:0] AW,
@@ -21,7 +22,7 @@ module Registers( //Registros de proposito general
 			mem[AW] <= DW;
 		end
     end
-    
+
 	initial begin
 		$readmemb("data.txt", mem);
         //El primer registro es cero y no permite otro valor ademas de cero
