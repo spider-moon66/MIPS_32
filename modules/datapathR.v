@@ -16,6 +16,9 @@ module DTPR (
     //ALU_CTRL wires
     wire [3:0] AC_aluOP;
 
+    //MIPSALU wires
+    wire [31:0] ALU_RESULT;
+
     Control_Unit control(
         .op([31:26] Instruction), 
         .ALUOp(CU_ALUOp), 
@@ -25,13 +28,18 @@ module DTPR (
     );
 
     ALU_CTRL aluCTRL(
-        .Control_Signal(CU_ALUOp);
-        .aluOP(AC_aluOP);
-        .funct();
-        .clk();
+        .Control_Signal(CU_ALUOp),
+        .aluOP(AC_aluOP),
+        .funct(),
+        .clk(),
     );
 
-
+    MIPSALU alu_unit(
+        .A(),
+        .B(),
+        .ALUctl(AC_aluOP),
+        .ALUOut(ALU_RESULT)
+    );
 
 
 endmodule
