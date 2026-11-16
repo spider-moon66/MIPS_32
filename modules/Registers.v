@@ -1,4 +1,5 @@
-module Registers(
+module Registers( //Registros de proposito general
+    input clk,
     input [4:0] AR1,
     input [4:0] AR2,
     input [4:0] AW,
@@ -14,14 +15,17 @@ module Registers(
     assign DR1 = mem[AR1];
 	assign DR2 = mem[AR2];
 	
-	always @(posedge clk)
-		if(WE)
+	always @(posedge clk) begin
+		if(WE && AW != 5'd0)
 		begin
 			mem[AW] <= DW;
 		end
-	
+    end
+    
 	initial begin
 		$readmemb("data.txt", mem);
+        //El primer registro es cero y no permite otro valor ademas de cero
+        mem[0] = 32'd0;
 	end
     
 endmodule

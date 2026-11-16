@@ -19,6 +19,8 @@ module DTPR (
     //MIPSALU wires
     wire [31:0] ALU_RESULT;
 
+    
+
     Control_Unit control(
         .op([31:26] Instruction), 
         .ALUOp(CU_ALUOp), 
@@ -32,6 +34,17 @@ module DTPR (
         .aluOP(AC_aluOP),
         .funct(),
         .clk(),
+    );
+
+    Registers reg(
+        .clk(),
+        .AR1(),
+        .AR2(),
+        .AW(),
+        .DW(),
+        .WE(),
+        .DR1(),
+        .DR2()
     );
 
     MIPSALU alu_unit(
