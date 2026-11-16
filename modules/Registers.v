@@ -1,9 +1,9 @@
 module Registers( //Registros de proposito general
     input clk,
     input reset,
-    input [4:0] AR1,
-    input [4:0] AR2,
-    input [4:0] AW,
+    input [4:0] AR1,//rt
+    input [4:0] AR2,//rs
+    input [4:0] AW,//rd
     input [31:0] DW,
     //Recibe la señal de memWrite/Control
     input WE,

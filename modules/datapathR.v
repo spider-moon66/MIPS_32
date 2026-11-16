@@ -1,7 +1,16 @@
 module DTPR (
-    input clk;
+    input clk,
     input [31:0] Instruction,
 );
+
+    wire [5:0]  opcode = Instruction[31:26];
+    wire [4:0]  rs     = Instruction[25:21];
+    wire [4:0]  rt     = Instruction[20:16];
+    wire [4:0]  rd     = Instruction[15:11];
+    wire [4:0]  shamt  = Instruction[10:6];
+    wire [5:0]  funct  = Instruction[5:0];
+    wire [15:0] imm    = Instruction[15:0];
+
     //Control wires
     wire CU_OUT;
     wire CU_RegWrite;
@@ -27,35 +36,35 @@ module DTPR (
 
 
     Control_Unit control(
-        .op([31:26] Instruction), 
+        .op(opcode), 
         .ALUOp(CU_ALUOp), 
         .RegWrite(CU_RegWrite), 
         .RegDst(CU_RegDst)
-        .clk(clk);
     );
 
     ALU_CTRL aluCTRL(
         .Control_Signal(CU_ALUOp),
         .aluOP(AC_aluOP),
-        .funct(),
+        .funct(funct),
         .clk(clk),
     );
 
     Registers reg(
         .clk(clk),
-        .AR1(),
-        .AR2(),
-        .AW(),
+        .AR1(rs),
+        .AR2(rt),
+        .AW(rd),
+        //Se conecta con la salida de un deplexor binario
         .DW(),
-        .WE(),
+        .WE(CU_RegWrite),
         .DR1(),
         .DR2()
     );
 
     Memory_Data memgen(
         .clk(clk),
-        .Address();
-        .DataIn();
+        .Address(),
+        .DataIn(),
         .WtoM_enable(),
         .LfromM_enable(),
         .DataOut(DataFM)

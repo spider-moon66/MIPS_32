@@ -1,5 +1,4 @@
 module Control_Unit(
-	input clk,
 	input [5:0] op,
 	//Nota: las salidas tienen que ser declaradas como registros para poder ser modificadas en el bloque always
 	output reg RegWrite,
@@ -14,7 +13,7 @@ module Control_Unit(
 	);
 	
 	//decodificador de operaciones
-	always@(posedge clk) begin
+	always@(*) begin
 		case (op)
 		//El código de operacion para instrucciones tipo R/SPECIAL es 0
 		//Lo que distingue y agrupa diferentes tipos de instrucciones es el patrón de instrucción
