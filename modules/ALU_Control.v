@@ -4,7 +4,7 @@ module ALU_CTRL(
 	input [1:0] Control_Signal,
 	output reg [3:0] aluOP);
 	//Nota: se utilizan asignaciones no bloqueantes (<=) porque estamos intentando trabajar con un clk
-	always @(posedge clk) begin
+	always @(*) begin
 		case (Control_Signal)
 		//siempre suma (lw/sw)
 			2'b00 : begin

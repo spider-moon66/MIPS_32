@@ -25,6 +25,9 @@ module DTPR (
     //mux reg wires
     wire [31:0] MUX_REG_OUT;
 
+    //mux regDst wires
+    wire [4:0] MUX_REGDST_OUT;
+
     //reg wires
     wire [31:0] A_R;
     wire [31:0] B_R;
@@ -50,8 +53,7 @@ module DTPR (
     ALU_CTRL aluCTRL(
         .Control_Signal(CU_ALUOp),
         .aluOP(AC_aluOP),
-        .funct(funct),
-        .clk(clk)
+        .funct(funct)
     );
 
     MUX_BIN_32B mux_reg(
@@ -61,12 +63,18 @@ module DTPR (
         .dataOut(MUX_REG_OUT)
     );
 
+    MUX_BIN_5B mux_regDst(
+        .Control_Signal(CU_RegDst),
+        .data0(rt),
+        .data1(rd),
+        .dataOut(MUX_REGDST_OUT)
+    );
+
     Registers GP_reg(
         .clk(clk),
         .AR1(rs),
         .AR2(rt),
-        //En un full datapath, esta entrada se coneccta con la salida de un mux binario
-        .AW(rd),
+        .AW(MUX_REGDST_OUT),
         //Se conecta con la salida de un mux binario
         .DW(MUX_REG_OUT),
         .WE(CU_RegWrite),
@@ -76,8 +84,8 @@ module DTPR (
 
     Memory_Data memgen(
         .clk(clk),
-        .Address(),
-        .DataIn(),
+        .Address(ALU_RESULT),
+        .DataIn(B_R),
         .WtoM_enable(CU_MemWrite),
         .LfromM_enable(CU_MemRead),
         .DataOut(DataFM)
