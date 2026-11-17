@@ -1,6 +1,6 @@
 
 module Instruction_Memory(
-	input clk;
+	input clk,
 	input [4:0] AR,//read address
 	output reg [31:0] DR //Instruction
 	);

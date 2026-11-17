@@ -24,7 +24,8 @@ module Registers( //Registros de proposito general
     end
 
 	initial begin
-		$readmemb("data.txt", mem);
+        //hex
+		$readmemh("data.txt", mem);
         //El primer registro es cero y no permite otro valor ademas de cero
         mem[0] = 32'd0;
 	end

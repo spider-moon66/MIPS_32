@@ -69,7 +69,8 @@ module DTPR (
         .data1(rd),
         .dataOut(MUX_REGDST_OUT)
     );
-
+    
+    //General Purpose Registers
     Registers GP_reg(
         .clk(clk),
         .AR1(rs),
@@ -85,7 +86,7 @@ module DTPR (
     Memory_Data memgen(
         .clk(clk),
         .Address(ALU_RESULT),
-        .DataIn(B_R),
+        .DataIN(B_R),
         .WtoM_enable(CU_MemWrite),
         .LfromM_enable(CU_MemRead),
         .DataOut(DataFM)

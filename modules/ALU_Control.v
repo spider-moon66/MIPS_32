@@ -1,5 +1,4 @@
 module ALU_CTRL(
-	input clk,
 	input [5:0] funct,
 	input [1:0] Control_Signal,
 	output reg [3:0] aluOP);
@@ -27,7 +26,7 @@ module ALU_CTRL(
 					6'h2A: aluOP <= 4'd7; //SLT
 					6'h27: aluOP <= 4'd12;//NOR
 					default: aluOP <= 0;
-				end
+				endcase
 			end
 		//Error
 			default : begin
