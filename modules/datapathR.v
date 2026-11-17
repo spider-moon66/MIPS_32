@@ -1,6 +1,6 @@
 module DTPR (
     input clk,
-    input [31:0] Instruction,
+    input [31:0] Instruction
 );
 
     wire [5:0]  opcode = Instruction[31:26];
@@ -22,7 +22,12 @@ module DTPR (
 	wire [1:0] CU_ALUOp; 
 	wire CU_ALUSrc;
 
+    //mux reg wires
+    wire [31:0] MUX_REG_OUT;
+
     //reg wires
+    wire [31:0] A_R;
+    wire [31:0] B_R;
 
     //memgen wires
     wire [31:0] DataFM; //Data from mem
@@ -46,33 +51,41 @@ module DTPR (
         .Control_Signal(CU_ALUOp),
         .aluOP(AC_aluOP),
         .funct(funct),
-        .clk(clk),
+        .clk(clk)
     );
 
-    Registers reg(
+    MUX_BIN_32B mux_reg(
+        .Control_Signal(CU_MemToReg),
+        .data0(ALU_RESULT),
+        .data1(DataFM),
+        .dataOut(MUX_REG_OUT)
+    );
+
+    Registers GP_reg(
         .clk(clk),
         .AR1(rs),
         .AR2(rt),
+        //En un full datapath, esta entrada se coneccta con la salida de un mux binario
         .AW(rd),
-        //Se conecta con la salida de un deplexor binario
-        .DW(),
+        //Se conecta con la salida de un mux binario
+        .DW(MUX_REG_OUT),
         .WE(CU_RegWrite),
-        .DR1(),
-        .DR2()
+        .DR1(A_R),
+        .DR2(B_R)
     );
 
     Memory_Data memgen(
         .clk(clk),
         .Address(),
         .DataIn(),
-        .WtoM_enable(),
-        .LfromM_enable(),
+        .WtoM_enable(CU_MemWrite),
+        .LfromM_enable(CU_MemRead),
         .DataOut(DataFM)
     );
 
     MIPSALU alu_unit(
-        .A(),
-        .B(),
+        .A(A_R),
+        .B(B_R),
         .ALUctl(AC_aluOP),
         .ALUOut(ALU_RESULT)
     );
