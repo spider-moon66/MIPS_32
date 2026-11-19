@@ -1,0 +1,32 @@
+module Registers( //Registros de proposito general
+    input clk,
+    input reset,
+    input [4:0] AR1,//rt
+    input [4:0] AR2,//rs
+    input [4:0] AW,//rd
+    input [31:0] DW,
+    //Recibe la señal de memWrite/Control
+    input WE,
+    output [31:0] DR1,
+    output [31:0] DR2
+);
+
+    reg [31:0]mem[0:31];
+
+    assign DR1 = mem[AR1];
+	assign DR2 = mem[AR2];
+	
+	always @(posedge clk) begin
+		if(WE && AW != 5'd0)
+		begin
+			mem[AW] <= DW;
+		end
+    end
+
+	initial begin
+		$readmemh("data.txt", mem);
+        //El primer registro es cero y no permite otro valor ademas de cero
+        mem[0] = 32'd0;
+	end
+    
+endmodule
